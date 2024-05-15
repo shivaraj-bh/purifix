@@ -132,6 +132,9 @@ let
         mkdir $out
         mkdir $out/bin
         ${lib.optionalString (nodeModules != null) "ln -s ${nodeModules} $out/node_modules"}
+        ${lib.optionalString (nodeModules != null) "cp ${package-config.src}/package.json $out/package.json"}
+        # Question: is `src` configurable in `spago.yaml`?
+        ${lib.optionalString (nodeModules != null) "cp -r ${package-config.src}/src $out/src"}
         cp --preserve -L -rv ${build}/output $out/output
         echo "#!${runtimeShell}" >> $out/bin/${yaml.package.name}
         echo "${nodejs}/bin/node --input-type=module --abort-on-uncaught-exception --trace-sigint --trace-uncaught --eval=\"${evaluate}\"" >> $out/bin/${yaml.package.name}
