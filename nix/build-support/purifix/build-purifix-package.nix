@@ -134,7 +134,7 @@ let
         ${lib.optionalString (nodeModules != null) "ln -s ${nodeModules} $out/node_modules"}
         cp --preserve -L -rv ${build}/output $out/output
         echo "#!${runtimeShell}" >> $out/bin/${yaml.package.name}
-        echo "${nodejs}/bin/node --input-type=module --abort-on-uncaught-exception --trace-sigint --trace-uncaught --eval=\"${evaluate}\"" >> $out/bin/${yaml.package.name}
+        echo "${nodejs}/bin/node --use-openssl-ca --input-type=module --abort-on-uncaught-exception --trace-sigint --trace-uncaught --eval=\"${evaluate}\"" >> $out/bin/${yaml.package.name}
         chmod +x $out/bin/${yaml.package.name}
       '';
     };
